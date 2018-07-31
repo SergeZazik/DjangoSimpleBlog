@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}Add a New Article{% endblock %}
+
+{% block content %}
+  <form method="post">
+  {% csrf_token %}
+    {% for field in form %}
+        <div class="form-group">
+            <label>{{ field.label_tag }}</label>
+             <p>{{ field }}</p>
+        </div>
+    {% endfor %}
+  <button type="submit" class="btn btn-success">Post</button>
+  </form>
+{% endblock %}

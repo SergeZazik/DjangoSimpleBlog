@@ -1,0 +1,11 @@
+.navbar-brand {
+  font-family: 'Peralta', cursive;
+}
+
+#comment-form {
+  display: none;
+}
+
+.children {
+  padding-left: 50px;
+}

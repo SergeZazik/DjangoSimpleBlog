@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+ 
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+    <h3>{{ post.title }}</h3>
+    <p class="small">Published {{ post.publish }} by {{ post.author }}</p>
+    <p>{{ post.body|linebreaks }}</p>
+
+    <button type="button" class="btn btn-primary" id="commentButton">Add a new comment</button>
+    <form method="post" action="{% url 'post_detail' post.id %}" id="comment-form">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <button type="submit" class="btn btn-success">Add comment</button>
+    </form>
+
+    {% load mptt_tags %}
+    {% recursetree comments %}
+        <p>{{ node.author}} {{ node.created }}</p>
+        <p>{{ node.text }}</p>
+        <form method="post" action="{% url 'post_detail' post.id %}">
+        {% csrf_token %}
+        {{ comment_form.as_p }}
+        <input type="hidden" name="comment_id" value="{{ node.id }}">
+        <button type="submit" class="btn btn-success">Reply</button>
+        </form>
+        {% if not node.is_leaf_node %}
+            <div class="children">
+            {{ children }}
+        </div>
+        {% endif %}
+    {% endrecursetree %}
+{% endblock %}
