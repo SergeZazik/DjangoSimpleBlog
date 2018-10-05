@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Comment, Post
+from .models import Comment, Article
 
 
-class PostAdmin(admin.ModelAdmin):
+class ArticleAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug', 'author', 'status', 'created')
     list_filter = ('status', 'created', 'publish', 'author')
     search_fields = ('title', 'author')
@@ -12,6 +12,6 @@ class PostAdmin(admin.ModelAdmin):
     ordering = ['status', 'publish']
 
 
-admin.site.register(Post, PostAdmin)
+admin.site.register(Article, ArticleAdmin)
 
 admin.site.register(Comment)

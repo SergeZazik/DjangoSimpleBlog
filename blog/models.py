@@ -4,12 +4,7 @@ from django.contrib.auth.models import User
 from mptt.models import MPTTModel, TreeForeignKey
 
 
-class PublishedManager(models.Manager):
-    def get_queryset(self):
-        return super(PublishedManager, self).get_queryset().filter(status='published')
-
-
-class Post(models.Model):
+class Article(models.Model):
     STATUS_CHOICES = (
         ('draft', 'Draft'),
         ('published', 'Published'),
@@ -25,17 +20,18 @@ class Post(models.Model):
 
     objects = models.Manager()
 
-    published = PublishedManager()
-
     class Meta:
         ordering = ('-publish',)
 
     def __str__(self):
         return self.title
 
+    def get_absolute_url(self):
+        return reverse("articles:article-detail", kwargs={"id": self.id})
+
 
 class Comment(MPTTModel):
-    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='comments')
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='comments')
     author = models.CharField(max_length=80)
     text = models.TextField()
     created = models.DateTimeField(default=timezone.now)

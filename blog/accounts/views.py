@@ -1,9 +1,9 @@
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
-from .forms import SignUpForm
+from .forms import RegistrationForm
 
 
-class SignUp(CreateView):
-    form_class = SignUpForm
+class RegistrationView(CreateView):
+    form_class = RegistrationForm
     success_url = reverse_lazy('login')
-    template_name = 'registration/signup.html'
+    template_name = 'registration/registration.html'
